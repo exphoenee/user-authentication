@@ -6,10 +6,7 @@ export const signUpRoute = {
   path: "/api/signup",
   method: "post",
   handler: async (req, res) => {
-    console.log("signUpRoute", req.body);
     const { email, password } = req.body;
-    console.log("| email, password", email, password);
-
     const db = getDbConnection("react-auth-db");
     const user = await db.collection("users").findOne({ email });
 
@@ -49,7 +46,6 @@ export const signUpRoute = {
       { expiresIn: "2d" },
       (err, token) => {
         if (err) {
-          console.log(err);
           return res.sendStatus(500);
         }
 
