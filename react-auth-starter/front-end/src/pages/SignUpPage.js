@@ -8,7 +8,7 @@ import { useToken } from "../auth/useToken";
 export const SignUpPage = () => {
   const [token, setToken] = useToken();
   const [errorMessages, setErrorMessages] = useState(null);
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const history = useHistory();
@@ -19,7 +19,7 @@ export const SignUpPage = () => {
 
   const onRegisterClicked = async () => {
     const response = await axios.post("http://localhost:8080/api/signup", {
-      username,
+      email,
       password,
     });
     const { token } = response.data;
@@ -32,8 +32,8 @@ export const SignUpPage = () => {
       <h1>Sing Up Page</h1>
       {errorMessages && <p className="fail">{errorMessages}</p>}
       <input
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
         placeholder="someone@emila.com"
         type="email"
       />
@@ -52,7 +52,7 @@ export const SignUpPage = () => {
       <hr />
       <button
         disable={
-          !username ||
+          !email ||
           !password ||
           !passwordConfirm ||
           password !== passwordConfirm
@@ -64,7 +64,7 @@ export const SignUpPage = () => {
       </button>
       <button
         disable={
-          !username ||
+          !email ||
           !password ||
           !passwordConfirm ||
           password !== passwordConfirm
