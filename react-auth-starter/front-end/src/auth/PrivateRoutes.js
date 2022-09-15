@@ -1,13 +1,10 @@
 import { Route, Redirect } from "react-router-dom";
+import { useUser } from "./useUser";
 
 export const PrivateRoute = (props) => {
-  const user = true;
+  const user = useUser();
 
-  if (!user) {
-    console.log("redirected");
-    return <Redirect to="/login" />;
-  } else {
-    console.log("not redirected");
-    return <Route {...props} />;
-  }
+  if (!user) return <Redirect to="/login" />;
+
+  return <Route {...props} />;
 };
