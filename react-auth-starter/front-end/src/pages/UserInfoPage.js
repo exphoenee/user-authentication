@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-
-import { useToken } from "./../auth/useToken";
-import { useUser } from "./../auth/useUser";
+import { useToken } from "../auth/useToken";
+import { useUser } from "../auth/useUser";
 
 export const UserInfoPage = () => {
   const user = useUser();
@@ -17,9 +16,9 @@ export const UserInfoPage = () => {
 
   // These states are bound to the values of the text inputs
   // on the page (see JSX below).
-  const [favoriteFood, setFavoriteFood] = useState(info.favoriteFood || "N/A");
-  const [hairColor, setHairColor] = useState(info.hairColor || "N/A");
-  const [bio, setBio] = useState(info.bio || "N/A");
+  const [favoriteFood, setFavoriteFood] = useState(info.favoriteFood || "");
+  const [hairColor, setHairColor] = useState(info.hairColor || "");
+  const [bio, setBio] = useState(info.bio || "");
 
   // These state variables control whether or not we show
   // the success and error message sections after making
@@ -40,15 +39,19 @@ export const UserInfoPage = () => {
   }, [showSuccessMessage, showErrorMessage]);
 
   const saveChanges = async () => {
-    // Send a request to the server to
-    // update the user's info with any changes we've
-    // made to the text input values
     try {
       const response = await axios.put(
         `http://localhost:8080/api/users/${id}`,
-        { info: { favoriteFood, hairColor, bio } },
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          favoriteFood,
+          hairColor,
+          bio,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
+
       const { token: newToken } = response.data;
       setToken(newToken);
       setShowSuccessMessage(true);
@@ -64,11 +67,9 @@ export const UserInfoPage = () => {
   };
 
   const resetValues = () => {
-    // Reset the text input values to
-    // their starting values (the data we loaded from the server)
-    setFavoriteFood(info.favoriteFood || "N/A");
-    setHairColor(info.hairColor || "N/A");
-    setBio(info.bio || "N/A");
+    setFavoriteFood(info.favoriteFood);
+    setHairColor(info.hairColor);
+    setBio(info.bio);
   };
 
   // And here we have the JSX for our component. It's pretty straightforward
