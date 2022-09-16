@@ -16,6 +16,7 @@ export const loginRoute = {
       const isPasswordCorrect = await bcrypt.compare(password, hashedPassword);
 
       const handleUser = () => {
+        //sign a new token with the user's id and email
         jwt.sign(
           {
             id,
@@ -34,6 +35,7 @@ export const loginRoute = {
         );
       };
 
+      //if the password is correct, sign a new token with the user's id and email
       if (isPasswordCorrect) {
         handleUser();
       } else {
