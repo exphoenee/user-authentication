@@ -7,7 +7,14 @@ const PORT = process.env.PORT || 8080;
 
 const app = express();
 
-app.use(cors());
+// avoiding cors error the server runs on localhost port:8080 and the client runs on localhost port:3000
+const corsOptions = {
+  origin: "*",
+  methods: ["POST", "GET", "PATCH", "DELETE", "OPTIONS", "PUT"],
+  allowedHeaders: ["Content-Type", "Authorization", " application/json"],
+};
+
+app.use(cors(corsOptions));
 
 // This allows us to access the body of POST/PUT
 // requests in our route handlers (as req.body)
