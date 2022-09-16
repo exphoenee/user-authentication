@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+import { useToken } from "./useToken";
 
 export const useUser = () => {
-  const [token, setToken] = useState(null);
+  const [token] = useToken();
 
   const getPayloadFromToken = (token) => {
     if (!token) {
