@@ -3,6 +3,7 @@ import { UserInfoPage } from "./pages/UserInfoPage";
 import { LoginPage } from "./pages/LoginPage";
 import { SignUpPage } from "./pages/SignUpPage";
 import { PrivateRoute } from "./auth/PrivateRoutes";
+import { VerifyEmailPage } from "./pages/verifyEmailPage";
 
 export const Routes = () => {
   return (
@@ -13,6 +14,9 @@ export const Routes = () => {
         </PrivateRoute>
         <Route path="/login">
           <LoginPage />
+        </Route>
+        <Route path="/verifyemail">
+          <VerifyEmailPage />
         </Route>
         <Route path="/signup">
           <SignUpPage />
