@@ -44,7 +44,7 @@ export const UserInfoPage = () => {
     // update the user's info with any changes we've
     // made to the text input values
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         `http://localhost:8080/api/users/${id}`,
         { info: { favoriteFood, hairColor, bio } },
         { headers: { Authorization: `Bearer ${token}` } }
