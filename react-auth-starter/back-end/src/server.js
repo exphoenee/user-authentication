@@ -14,7 +14,7 @@ const app = express();
 //   allowedHeaders: ["Content-Type", "Authorization", " application/json"],
 // };
 
-//app.use(cors());
+// app.use(cors());
 
 // This allows us to access the body of POST/PUT
 // requests in our route handlers (as req.body)
@@ -23,6 +23,7 @@ app.use(express.json());
 // Add all the routes to our Express server
 // exported from routes/index.js
 routes.forEach((route) => {
+  console.log("method: " + route.method + ", path: " + route.path);
   app[route.method](route.path, route.handler);
 });
 
