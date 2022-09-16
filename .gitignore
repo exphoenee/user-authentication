@@ -1,2 +1,5 @@
 
 react-auth-starter/back-end/.env
+react-auth-starter/front-end/.vscode/
+react-auth-starter/back-end/.vscode/
+react-auth-starter/.vscode/
