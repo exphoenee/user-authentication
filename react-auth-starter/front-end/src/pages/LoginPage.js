@@ -1,13 +1,27 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
+
+import { useToken } from "./../auth/useToken";
 
 export const LoginPage = () => {
+  const [token, setToken] = useToken();
+
   const [errorMessages, setErrorMessages] = useState(null);
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
 
-  const onLoginClicked = () => {};
+  const onLoginClicked = async () => {
+    const response = await axios.post("http://localhost:8080/api/login", {
+      email,
+      password,
+    });
+    const { token } = response.data;
+    setToken(token);
+    history.push("/");
+  };
+
   const onSignUpClicked = () => {
     history.push("/signup");
   };
@@ -20,8 +34,8 @@ export const LoginPage = () => {
       <h1>Login Page</h1>
       {errorMessages && <p className="fail">{errorMessages}</p>}
       <input
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
         placeholder="someone@emila.com"
         type="email"
       />
