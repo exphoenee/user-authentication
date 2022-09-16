@@ -1,24 +1,46 @@
 import React from "react";
 import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+
+import { useToken } from "./../auth/useToken";
+import { EmailVerificationFailed } from "./EmailVerificationFailedPage";
+import { EmailVerificationSuccess } from "./EmailVerificationFailedPage";
 
 export const VerifyEmailPage = () => {
-  const history = useHistory();
+  //states isLoading and isSuccess defined here,
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSuccess, setIsSuccess] = useState(false);
 
+  //added verification form url parameter
+  const verificationString = useParams();
+
+  //gets token form useToken
+  const [_, setToken] = useToken;
+
+  //in a useEffect hook, we make a request to the server to verify the email
   useEffect(() => {
-    const interval = setTimeout(() => {
-      const token = window.location.search.split("=")[1];
-      if (token) {
-        history.push("/verifyemail");
+    const loadVerification = async () => {
+      try {
+        const response = await axios.post(
+          `http://localhost:8080/api/users/verify-email`,
+          {
+            verificationString,
+          }
+        );
+        const { token } = response;
+        setToken(token);
+        setIsSuccess(true);
+        setIsLoading(false);
+      } catch (error) {
+        setIsSuccess(false);
+        setIsLoading(false);
       }
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [history]);
+    };
+    loadVerification();
+  }, [setToken, verificationString]);
 
-  return (
-    <div>
-      <h1>Thank you for signing up!</h1>
-      <p>A verification email has been sent!</p>
-    </div>
-  );
+  if (isLoading) return <p>Loading...</p>;
+  if (!isSuccess) return <EmailVerificationFailed />;
+  return <EmailVerificationSuccess />;
 };
