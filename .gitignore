@@ -29,3 +29,4 @@ react-auth-starter/.vscode/*
 react-auth-starter/back-end/node_modules/*
 react-auth-starter/front-end/node_modules/*
 react-auth-starter/node_modules/*
+react-auth-starter/back-end/serverlog/*
