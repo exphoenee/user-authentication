@@ -63,8 +63,7 @@ export const UserInfoPage = () => {
   const logOut = () => {
     // We'll want to log the user out here
     // and send them to the "login page"
-    localStorage.removeItem("token");
-    history.push("/login");
+    history.push("/logout");
   };
 
   const resetValues = () => {
