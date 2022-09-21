@@ -3,17 +3,21 @@ import jwt from "jsonwebtoken";
 import { getDbConnection } from "../db";
 import { v4 as uuid } from "uuid";
 import { sendEmail } from "../utils/sendEmail";
+import { log } from "../utils/logging";
 
 export const signUpRoute = {
   path: "/api/signup",
   method: "post",
   handler: async (req, res) => {
     const { email, password } = req.body;
-    const db = getDbConnection("react-auth-db");
-    const user = await db.collection("users").findOne({ email });
+    const db = getDbConnection(process.env.DBNAME);
+    const user = await db
+      .collection(process.env.USERSCOLLECTION)
+      .findOne({ email });
 
     if (user) {
-      res.status(409).send("User already exists");
+      log("User already exists in DB!");
+      res.status(409).send("User already exists in DB!");
     }
 
     // use bycrypt to hash the password
@@ -33,7 +37,7 @@ export const signUpRoute = {
     };
 
     // insert the user into the database
-    const result = await db.collection("users").insertOne({
+    const result = await db.collection(process.env.USERSCOLLECTION).insertOne({
       email,
       hashedPassword,
       info: startingInfo,
@@ -46,6 +50,7 @@ export const signUpRoute = {
 
     try {
       // send the verification email with the verification string as a link
+      log("Sending verification email...");
       await sendEmail({
         to: email,
         from: "viktor.bozzay@webforsol.hu",
@@ -53,7 +58,7 @@ export const signUpRoute = {
         text: `Please click on the following link to verify your email: http://localhost:3000/verify-email/${verificationString}`,
       });
     } catch (err) {
-      console.log(err);
+      log(err);
     }
 
     // sign a new token with the user's id and email
@@ -68,9 +73,11 @@ export const signUpRoute = {
       { expiresIn: "2d" },
       (err, token) => {
         if (err) {
+          log("Error signing token");
           return res.sendStatus(500);
         }
 
+        log("JTW token signed!");
         res.status(200).send({ token });
       }
     );
