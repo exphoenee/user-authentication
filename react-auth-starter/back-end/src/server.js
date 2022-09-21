@@ -2,6 +2,7 @@ import express from "express";
 import { routes } from "./routes";
 import { initializeDbConnection } from "./db";
 import cors from "cors";
+import { log } from "./utils/logging";
 
 const PORT = process.env.PORT || 8080;
 
@@ -31,6 +32,6 @@ routes.forEach((route) => {
 // connection for every request.
 initializeDbConnection().then(() => {
   app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
+    log(`Server is listening on port ${PORT}`);
   });
 });
