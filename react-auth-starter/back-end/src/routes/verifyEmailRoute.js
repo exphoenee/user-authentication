@@ -2,7 +2,7 @@ import { ObjectId } from "mongodb";
 import { getDbConnection } from "../db";
 import { jwt } from "jsonwebtoken";
 
-export const updateUserInfoRoute = {
+export const verifyEmailRoute = {
   path: "/api/users/:userId",
   method: "put",
   handler: async (req, res) => {
