@@ -1,0 +1,15 @@
+2022. 09. 21. 20:26:52: Server is listening on port 8080
+2022. 09. 21. 20:27:00: User found in DB
+2022. 09. 21. 20:27:00: Password is correct!
+2022. 09. 21. 20:27:00: JWT token created.
+2022. 09. 21. 20:27:13: Server is listening on port 8080
+2022. 09. 21. 20:27:15: User logged out!
+2022. 09. 21. 20:27:15: User logged out!
+2022. 09. 21. 20:27:24: User found in DB
+2022. 09. 21. 20:27:24: Password is correct!
+2022. 09. 21. 20:27:24: JWT token created.
+2022. 09. 21. 20:27:27: User logged out!
+2022. 09. 21. 20:27:27: User logged out!
+2022. 09. 21. 20:27:33: Server is listening on port 8080
+2022. 09. 21. 20:27:56: Server is listening on port 8080
+2022. 09. 21. 20:28:12: Server is listening on port 8080
