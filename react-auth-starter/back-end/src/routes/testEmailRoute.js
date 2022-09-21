@@ -1,4 +1,5 @@
 import { sendEmail } from "../utils/sendEmail";
+import { log } from "../utils/logging";
 
 export const testEmailRoute = {
   path: "/api/test-email",
@@ -13,9 +14,10 @@ export const testEmailRoute = {
         subject: "LinkedIn Learning Email Test",
         text: "Sikerült!",
       });
-
+      log("Email sent");
       res.status(200).json({ message: "Email sent" });
     } catch (err) {
+      log(err);
       res.status(500).send(err);
     }
   },
