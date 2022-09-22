@@ -23,7 +23,7 @@ export const EmailVerificationPage = () => {
     const loadVerification = async () => {
       try {
         const response = await axios.put(
-          `http://localhost:8080/api/verify-email`,
+          `http://localhost:8080/api/verifyemail`,
           {
             verificationString,
           }
@@ -40,7 +40,7 @@ export const EmailVerificationPage = () => {
       }
     };
     loadVerification();
-  }, []);
+  }, [setToken, verificationString]);
 
   if (isLoading) return <p>Loading...</p>;
   if (!isSuccess) return <EmailVerificationFailed />;
