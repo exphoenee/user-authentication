@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+
+/* Custom hooks */
 import { useToken } from "../auth/useToken";
 import { useUser } from "../auth/useUser";
 
