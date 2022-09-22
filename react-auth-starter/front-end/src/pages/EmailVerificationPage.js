@@ -16,14 +16,14 @@ export const EmailVerificationPage = () => {
   const verificationString = useParams();
 
   //gets token form useToken
-  const [_, setToken] = useToken();
+  const [_, setToken] = useToken(null);
 
   //in a useEffect hook, we make a request to the server to verify the email
   useEffect(() => {
     const loadVerification = async () => {
       try {
-        const response = await axios.post(
-          `http://localhost:8080/api/users/verify-email`,
+        const response = await axios.put(
+          `http://localhost:8080/api/verify-email`,
           {
             verificationString,
           }
@@ -32,13 +32,15 @@ export const EmailVerificationPage = () => {
         setToken(token);
         setIsSuccess(true);
         setIsLoading(false);
+        console.log(token);
       } catch (error) {
         setIsSuccess(false);
         setIsLoading(false);
+        console.log(error);
       }
     };
     loadVerification();
-  }, [setToken, verificationString]);
+  }, []);
 
   if (isLoading) return <p>Loading...</p>;
   if (!isSuccess) return <EmailVerificationFailed />;
