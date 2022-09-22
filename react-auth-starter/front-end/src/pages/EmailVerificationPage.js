@@ -16,7 +16,7 @@ export const EmailVerificationPage = () => {
   const verificationString = useParams();
 
   //gets token form useToken
-  const [_, setToken] = useToken;
+  const [_, setToken] = useToken();
 
   //in a useEffect hook, we make a request to the server to verify the email
   useEffect(() => {
