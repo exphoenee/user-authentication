@@ -10,7 +10,7 @@ export const testEmailRoute = {
 
       sendEmail({
         to: "bozzay.viktor@gmail.com",
-        from: "viktor.bozzay@webforsol.hu",
+        from: process.env.SENDERMAIL,
         subject,
         text,
       });
