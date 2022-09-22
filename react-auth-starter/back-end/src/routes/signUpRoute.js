@@ -53,7 +53,7 @@ export const signUpRoute = {
       log("Sending verification email...");
       sendEmail({
         to: email,
-        from: "viktor.bozzay@webforsol.hu",
+        from: process.env.SENDERMAIL,
         subject: "Please verify your email",
         text: `Please click on the following link to verify your email: http://localhost:3000/email-verification/${verificationString}`,
       });
