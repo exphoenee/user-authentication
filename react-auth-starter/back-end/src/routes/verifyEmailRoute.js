@@ -4,11 +4,13 @@ import { jwt } from "jsonwebtoken";
 import { log } from "../utils/logging";
 
 export const verifyEmailRoute = {
-  path: "/api/users/:userId",
-  method: "put",
+  path: "/api/verifyemail",
+  method: "post",
   handler: async (req, res) => {
     //first getting the everification string form the url
-    const { verificationString } = req.params;
+    const { verificationString } = req.body;
+
+    console.log(req);
 
     //getting the database connection
     const db = getDbConnection(process.env.DBNAME);
@@ -24,12 +26,13 @@ export const verifyEmailRoute = {
       return res.status(404).send("User not found");
     }
 
-    const { _id: id, email, info } = result;
-
     //if the user is found, update the user's isVerified field to true
     const result = await db
       .collection(process.env.USERSCOLLECTION)
       .updateOne({ _id: ObjectId(id) }, { $set: { isVerified: true } });
+
+    console.log(result);
+    const { _id: id, email, info } = result;
 
     //signing a new token with the updated user data
     jwt.sign(
