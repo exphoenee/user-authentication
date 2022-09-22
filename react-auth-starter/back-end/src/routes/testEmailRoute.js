@@ -11,8 +11,8 @@ export const testEmailRoute = {
       sendEmail({
         to: "bozzay.viktor@gmail.com",
         from: "viktor.bozzay@webforsol.hu",
-        subject: "LinkedIn Learning Email Test",
-        text: "Sikerült!",
+        subject,
+        text,
       });
       log("Email sent");
       res.status(200).json({ message: "Email sent" });
