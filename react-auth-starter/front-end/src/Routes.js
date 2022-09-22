@@ -17,7 +17,7 @@ export const Routes = () => {
         <Route path="/login">
           <LoginPage />
         </Route>
-        <Route path="/verifyemail">
+        <Route path="/verify-email">
           <VerifyEmailPage />
         </Route>
         <Route path="/email-verification/:verificationString">
