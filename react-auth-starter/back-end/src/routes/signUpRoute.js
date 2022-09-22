@@ -51,14 +51,16 @@ export const signUpRoute = {
     try {
       // send the verification email with the verification string as a link
       log("Sending verification email...");
-      await sendEmail({
+      sendEmail({
         to: email,
         from: "viktor.bozzay@webforsol.hu",
         subject: "Please verify your email",
-        text: `Please click on the following link to verify your email: http://localhost:3000/verify-email/${verificationString}`,
+        text: `Please click on the following link to verify your email: http://localhost:3000/email-verification/${verificationString}`,
       });
+      log("Verification email sent!");
     } catch (err) {
       log(err);
+      res.status(500).send(err);
     }
 
     // sign a new token with the user's id and email
