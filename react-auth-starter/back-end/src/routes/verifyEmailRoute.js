@@ -1,16 +1,14 @@
 import { ObjectId } from "mongodb";
 import { getDbConnection } from "../db";
-import { jwt } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { log } from "../utils/logging";
 
 export const verifyEmailRoute = {
   path: "/api/verifyemail",
-  method: "post",
+  method: "put",
   handler: async (req, res) => {
     //first getting the everification string form the url
     const { verificationString } = req.body;
-
-    console.log(req);
 
     //getting the database connection
     const db = getDbConnection(process.env.DBNAME);
@@ -22,17 +20,18 @@ export const verifyEmailRoute = {
 
     //if the user is not found, send a 404 status code
     if (!user) {
-      log("User not found in DB!");
-      return res.status(404).send("User not found");
+      log("The email email verification code is incorrect!!");
+      return res
+        .status(401)
+        .send({ message: "The email email verification code is incorrect!" });
     }
 
+    const { _id: id, email, info } = user;
+
     //if the user is found, update the user's isVerified field to true
-    const result = await db
+    await db
       .collection(process.env.USERSCOLLECTION)
       .updateOne({ _id: ObjectId(id) }, { $set: { isVerified: true } });
-
-    console.log(result);
-    const { _id: id, email, info } = result;
 
     //signing a new token with the updated user data
     jwt.sign(
@@ -41,11 +40,12 @@ export const verifyEmailRoute = {
       { expiresIn: "2d" },
       (err, token) => {
         if (err) {
-          log("JWT token signing failed!");
-          return res.status(500).json(err);
+          log("Error signing token");
+          return res.sendStatus(500);
         }
-        log("JWT token signed!");
-        res.status(200).json({ token });
+
+        log("JTW token signed!");
+        res.status(200).send({ token });
       }
     );
   },
