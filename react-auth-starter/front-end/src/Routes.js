@@ -6,6 +6,7 @@ import { PrivateRoute } from "./auth/PrivateRoutes";
 import { VerifyEmailPage } from "./pages/VerifyEmailPage";
 import { EmailVerificationPage } from "./pages/EmailVerificationPage";
 import { LogoutPage } from "./pages/LogoutPage";
+import { ForgotPasswordPage } from "./pages/ForgotPasswordPage";
 
 export const Routes = () => {
   return (
@@ -28,6 +29,9 @@ export const Routes = () => {
         </Route>
         <Route path="/logout">
           <LogoutPage />
+        </Route>
+        <Route path="/forgot-password">
+          <ForgotPasswordPage />
         </Route>
       </Switch>
     </Router>
