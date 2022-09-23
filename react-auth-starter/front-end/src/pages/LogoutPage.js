@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
-export const LogoutPage = () => {
+const LogoutPage = () => {
   const history = useHistory();
 
   const login = () => {
@@ -23,3 +23,5 @@ export const LogoutPage = () => {
     </div>
   );
 };
+
+export default LogoutPage;
