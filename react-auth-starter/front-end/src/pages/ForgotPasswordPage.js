@@ -23,6 +23,7 @@ const ForgotPasswordPage = () => {
     }
   };
 
+  // TODO: itt nem műxik a success
   return success ? (
     <div className="content-container">
       <h1>Success</h1>
