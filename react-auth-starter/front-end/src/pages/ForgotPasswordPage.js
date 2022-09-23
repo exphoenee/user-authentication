@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
+import { getRoute } from "../Routes";
+
 const ForgotPasswordPage = () => {
   const [errorMessages, setErrorMessages] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -13,7 +15,7 @@ const ForgotPasswordPage = () => {
       await axios.put(`http://localhost:8080/api/forgot-password/${email}`);
       setSuccess(true);
       setTimeout(() => {
-        history.push("/login");
+        history.push(getRoute("login"));
       }, 3000);
     } catch (err) {
       setErrorMessages(err.message);
