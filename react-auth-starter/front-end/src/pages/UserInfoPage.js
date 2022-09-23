@@ -6,6 +6,8 @@ import axios from "axios";
 import { useToken } from "../auth/useToken";
 import { useUser } from "../auth/useUser";
 
+import { getRoute } from "../Routes";
+
 const UserInfoPage = () => {
   const user = useUser();
   const [token, setToken] = useToken();
@@ -65,7 +67,7 @@ const UserInfoPage = () => {
   const logOut = () => {
     // We'll want to log the user out here
     // and send them to the "login page"
-    history.push("/logout");
+    history.push(getRoute("logout"));
   };
 
   const resetValues = () => {
