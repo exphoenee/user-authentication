@@ -2,11 +2,13 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
+import { getRoute } from "../Routes";
+
 const LogoutPage = () => {
   const history = useHistory();
 
   const login = () => {
-    history.push("/login");
+    history.push(getRoute("login"));
   };
 
   useEffect(() => {
