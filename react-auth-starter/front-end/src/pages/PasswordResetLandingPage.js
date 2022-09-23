@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import PassWordResetFailed from "./PasswordResetFailed";
-import PassWordResetSuccess from "./PasswordResetSuccess";
 
-export const PasswordResetLandingPage = () => {
+import PassWordResetFailed from "./PasswordResetFailed";
+import PasswordResetSuccess from "./PasswordResetSuccess";
+
+const PasswordResetLandingPage = () => {
   const [passwordValue, setPasswordValue] = useState("");
   const [confirmPasswordValue, setConfirmPasswordValue] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
@@ -17,8 +18,7 @@ export const PasswordResetLandingPage = () => {
       await axios.put(
         `http://localhost:8080/api/users/${passwordResetCode}/reset-password`,
         {
-          password: passwordValue,
-          confirmPassword: confirmPasswordValue,
+          newPassword: passwordValue,
         }
       );
       setIsSuccess(true);
@@ -27,8 +27,9 @@ export const PasswordResetLandingPage = () => {
     }
   };
 
-  if (isFailure) return <PassWordResetFailed />;
-  if (isSuccess) return <PassWordResetSuccess />;
+  isSuccess && !isFailure && <PasswordResetSuccess />;
+  isFailure && !isSuccess && <PassWordResetFailed />;
+
   return (
     <div className="content-container">
       <h1>Reset password</h1>
@@ -59,3 +60,5 @@ export const PasswordResetLandingPage = () => {
     </div>
   );
 };
+
+export default PasswordResetLandingPage;
