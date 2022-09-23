@@ -31,6 +31,7 @@ export const ForgotPasswordPage = () => {
       <p>Enter your mail we'll send yo a reset link!</p>
       {errorMessages && <p className="fail">{errorMessages}</p>}
       <input
+        type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="someone@email.com"
