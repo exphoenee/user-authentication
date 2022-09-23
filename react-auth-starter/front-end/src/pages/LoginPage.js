@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
+import { getRoute } from "../Routes";
+
 import { useToken } from "./../auth/useToken";
 
 const LoginPage = () => {
@@ -19,14 +21,14 @@ const LoginPage = () => {
     });
     const { token } = response.data;
     setToken(token);
-    history.push("/");
+    history.push(getRoute("home"));
   };
 
   const onSignUpClicked = () => {
-    history.push("/signup");
+    history.push(getRoute("signup"));
   };
   const onPasswordForgot = () => {
-    history.push("/forgot-password");
+    history.push(getRoute("forgotpassword"));
   };
 
   return (
