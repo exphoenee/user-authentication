@@ -5,7 +5,7 @@ import axios from "axios";
 /* Authentication */
 import { useToken } from "../auth/useToken";
 
-export const SignUpPage = () => {
+const SignUpPage = () => {
   const [token, setToken] = useToken(null);
   const [errorMessages, setErrorMessages] = useState(null);
   const [email, setEmail] = useState("");
@@ -76,3 +76,5 @@ export const SignUpPage = () => {
     </div>
   );
 };
+
+export default SignUpPage;
