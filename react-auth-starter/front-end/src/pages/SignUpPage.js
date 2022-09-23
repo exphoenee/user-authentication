@@ -5,6 +5,8 @@ import axios from "axios";
 /* Authentication */
 import { useToken } from "../auth/useToken";
 
+import { getRoute } from "../Routes";
+
 const SignUpPage = () => {
   const [token, setToken] = useToken(null);
   const [errorMessages, setErrorMessages] = useState(null);
@@ -14,7 +16,7 @@ const SignUpPage = () => {
   const history = useHistory();
 
   const onLoginClicked = () => {
-    history.push("/login");
+    history.push(getRoute("login"));
   };
 
   const onRegisterClicked = async () => {
@@ -24,7 +26,7 @@ const SignUpPage = () => {
     });
     const { token } = response.data;
     setToken(token);
-    history.push("/");
+    history.push(getRoute("home"));
   };
 
   return (
