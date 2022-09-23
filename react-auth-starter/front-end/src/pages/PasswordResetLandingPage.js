@@ -27,8 +27,8 @@ const PasswordResetLandingPage = () => {
     }
   };
 
-  isSuccess && !isFailure && <PasswordResetSuccess />;
-  isFailure && !isSuccess && <PassWordResetFailed />;
+  if (isSuccess) return <PasswordResetSuccess />;
+  if (isFailure) return <PassWordResetFailed />;
 
   return (
     <div className="content-container">
@@ -51,9 +51,7 @@ const PasswordResetLandingPage = () => {
           (!passwordValue || !confirmPasswordValue) &&
           passwordValue !== confirmPasswordValue
         }
-        onClick={async () => {
-          onPasswordResetClicked();
-        }}
+        onClick={onPasswordResetClicked}
       >
         Reset password
       </button>
