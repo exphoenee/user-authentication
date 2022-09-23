@@ -1,7 +1,20 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+import React from "react";
+import { useHistory } from "react-router-dom";
 
-export const PassWordResetFailed = () => {
-  return <></>;
+const PasswordResetFailed = () => {
+  const history = useHistory();
+
+  const handleRedirect = () => {
+    history.push("/");
+  };
+
+  return (
+    <div>
+      <h1>Password reset successed!</h1>
+      <p>You can now loign with your new password.</p>
+      <button onClick={handleRedirect}>Go to Home</button>
+    </div>
+  );
 };
+
+export default PasswordResetFailed;
