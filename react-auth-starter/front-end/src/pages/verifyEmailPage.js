@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-export const VerifyEmailPage = () => {
+const VerifyEmailPage = () => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -22,3 +22,5 @@ export const VerifyEmailPage = () => {
     </div>
   );
 };
+
+export default VerifyEmailPage;
