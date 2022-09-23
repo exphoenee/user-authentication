@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
-export const ForgotPasswordPage = () => {
+const ForgotPasswordPage = () => {
   const [errorMessages, setErrorMessages] = useState(null);
   const [success, setSuccess] = useState(false);
   const [email, setEmail] = useState("");
@@ -42,3 +42,5 @@ export const ForgotPasswordPage = () => {
     </div>
   );
 };
+
+export default ForgotPasswordPage;
