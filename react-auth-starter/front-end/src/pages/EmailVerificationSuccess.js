@@ -1,11 +1,13 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
+import { getRoute } from "../Routes";
+
 export const EmailVerificationSuccess = () => {
   const history = useHistory();
 
   const handleRedirect = () => {
-    history.push("/");
+    history.push(getRoute("home"));
   };
 
   return (
