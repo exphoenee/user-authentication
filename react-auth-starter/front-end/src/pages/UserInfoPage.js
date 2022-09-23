@@ -6,7 +6,7 @@ import axios from "axios";
 import { useToken } from "../auth/useToken";
 import { useUser } from "../auth/useUser";
 
-export const UserInfoPage = () => {
+const UserInfoPage = () => {
   const user = useUser();
   const [token, setToken] = useToken();
 
@@ -116,3 +116,5 @@ export const UserInfoPage = () => {
     </div>
   );
 };
+
+export default UserInfoPage;
