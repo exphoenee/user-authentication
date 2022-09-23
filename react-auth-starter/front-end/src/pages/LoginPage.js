@@ -4,7 +4,7 @@ import axios from "axios";
 
 import { useToken } from "./../auth/useToken";
 
-export const LoginPage = () => {
+const LoginPage = () => {
   const [token, setToken] = useToken();
 
   const [errorMessages, setErrorMessages] = useState(null);
@@ -54,3 +54,5 @@ export const LoginPage = () => {
     </div>
   );
 };
+
+export default LoginPage;
