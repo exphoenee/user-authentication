@@ -6,25 +6,24 @@ export const resetPasswordRoute = {
   method: "put",
   handler: async (req, res) => {
     const { passwordResetCode } = req.params;
-    const { password } = req.body;
+    const { newPassword } = req.body;
 
     const db = getDbConnection(process.env.DBNAME);
 
+    const saltRounds = 10;
+    const newHashedPassword = await bcrypt.hash(password, saltRounds);
+
     const user = await db
       .collection(process.env.USERSCOLLECTION)
-      .findOne({ passwordResetCode });
+      .findOneAndUpdate(
+        { passwordResetCode },
+        { $set: { newHashedPassword } },
+        { $unset: { passwordResetCode: "" } }
+      );
 
-    if (user) {
-      const saltRounds = 10;
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-      await db
-        .collection(process.env.USERSCOLLECTION)
-        .updateOne({ passwordResetCode }, { $set: { hashedPassword } });
-
-      res.send("Password updated");
-    } else {
-      res.status(400).send("Invalid password reset code");
+    if (user.lastErrorObject.n === 0) {
+      res.status(404).send("Password reset failed");
     }
+    res.status(200).send("Password reset successful");
   },
 };
