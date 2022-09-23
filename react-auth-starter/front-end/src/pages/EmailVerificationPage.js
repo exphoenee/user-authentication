@@ -7,7 +7,7 @@ import { useToken } from "./../auth/useToken";
 import { EmailVerificationFailed } from "./EmailVerificationFailed";
 import { EmailVerificationSuccess } from "./EmailVerificationSuccess";
 
-export const EmailVerificationPage = () => {
+const EmailVerificationPage = () => {
   //states isLoading and isSuccess defined here,
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -46,3 +46,5 @@ export const EmailVerificationPage = () => {
   if (!isSuccess) return <EmailVerificationFailed />;
   return <EmailVerificationSuccess />;
 };
+
+export default EmailVerificationPage;
