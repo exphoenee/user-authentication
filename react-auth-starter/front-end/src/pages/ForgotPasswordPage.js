@@ -7,13 +7,14 @@ import { getRoute } from "../Routes";
 const ForgotPasswordPage = () => {
   const [errorMessages, setErrorMessages] = useState(null);
   const [success, setSuccess] = useState(false);
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("bozzay.viktor@gmail.com");
   const history = useHistory();
 
   const onPasswordResetClicked = async () => {
     try {
       await axios.put(`http://localhost:8080/api/forgot-password/${email}`);
       setSuccess(true);
+      console.log("success");
       setTimeout(() => {
         history.push(getRoute("login"));
       }, 3000);
