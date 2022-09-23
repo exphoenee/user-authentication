@@ -14,8 +14,6 @@ export const forgotPasswordRoute = {
 
     const db = getDbConnection(process.env.DBNAME);
 
-    console.log(email);
-
     const user = await db
       .collection(process.env.USERSCOLLECTION)
       .updateOne({ email }, { $set: { passwordResetCode } });
