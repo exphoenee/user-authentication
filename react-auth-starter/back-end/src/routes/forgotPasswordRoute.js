@@ -14,17 +14,19 @@ export const forgotPasswordRoute = {
 
     const db = getDbConnection(process.env.DBNAME);
 
-    const { user } = await db
+    console.log(email);
+
+    const user = await db
       .collection(process.env.USERSCOLLECTION)
       .updateOne({ email }, { $set: { passwordResetCode } });
 
     console.log(user);
 
-    if (user.nModified > 0) {
+    if (user.modifiedCount > 0) {
       try {
-        await sendEmail({
+        sendEmail({
           to: email,
-          from: process.env.EMAIL,
+          from: process.env.SENDERMAIL,
           subject: "Password Reset",
           text: `To reset your password click this link: http://localhost:3000/reset-password/${passwordResetCode}`,
         });
