@@ -1,4 +1,4 @@
-import { sendEmail } from "../services/sendEmail";
+import sendEmail from "../services/sendEmail";
 import { log } from "../services/logging";
 
 export const testEmailRoute = {
