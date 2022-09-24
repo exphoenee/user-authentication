@@ -21,8 +21,8 @@ const ForgotPasswordPage = () => {
         history.push(getRoute("login"));
       }, 3000);
     } catch (err) {
-      setErrorMessages(err);
       console.log(err);
+      setErrorMessages(err.message);
     }
     console.log("handled");
   };
