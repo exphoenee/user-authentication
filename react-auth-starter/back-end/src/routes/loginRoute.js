@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { getDbConnection } from "../db";
-import { log } from "../utils/logging";
+import { log } from "../services/logging";
 
 export const loginRoute = {
   path: "/api/login",
@@ -21,24 +21,7 @@ export const loginRoute = {
 
       const handleUser = () => {
         //sign a new token with the user's id and email
-        jwt.sign(
-          {
-            id,
-            email,
-            isVerified,
-            info,
-          },
-          process.env.JWT_SECRET,
-          { expiresIn: "2d" },
-          (err, token) => {
-            if (err) {
-              res.status(500).json(err);
-              log("Error signing token");
-            }
-            res.status(200).send({ token });
-            log("JWT token created.");
-          }
-        );
+        createToken(id, email, isVerified, info);
       };
 
       //if the password is correct, sign a new token with the user's id and email
