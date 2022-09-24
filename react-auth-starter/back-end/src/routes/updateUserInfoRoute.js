@@ -3,7 +3,7 @@ import { ObjectId } from "mongodb";
 import { getDbConnection } from "../db";
 import { log } from "../services/logging";
 
-import { createToken } from "../services/createToken";
+import createToken from "../services/createToken";
 
 export const updateUserInfoRoute = {
   path: "/api/users/:userId",
