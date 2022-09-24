@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 
-import { sendEmail } from "../services/sendEmail";
+import sendEmail from "../services/sendEmail";
 import { getDbConnection } from "../db";
 import { log } from "../services/logging";
 
