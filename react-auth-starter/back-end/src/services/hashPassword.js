@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { log } from "../utils/logging";
+import { log } from "./logging";
 
 const hashPassword = async (text) => {
   try {
