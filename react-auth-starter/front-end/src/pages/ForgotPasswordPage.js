@@ -11,16 +11,20 @@ const ForgotPasswordPage = () => {
   const history = useHistory();
 
   const onPasswordResetClicked = async () => {
+    console.log("clicked");
     try {
       await axios.put(`http://localhost:8080/api/forgot-password/${email}`);
       setSuccess(true);
-      console.log("success");
+      console.log("put method successed");
       setTimeout(() => {
+        console.log("redirected to login");
         history.push(getRoute("login"));
       }, 3000);
     } catch (err) {
-      setErrorMessages(err.message);
+      setErrorMessages(err);
+      console.log(err);
     }
+    console.log("handled");
   };
 
   // TODO: itt nem műxik a success
