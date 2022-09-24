@@ -19,3 +19,11 @@ export const routes = [
   resetPasswordRoute,
   //testEmailRoute,
 ];
+
+export const routeInfo = () =>
+  routes.map((route) => {
+    const routeMap = { path: route.path, method: route.method };
+    console.log(JSON.stringify(routeMap));
+    return routeMap;
+  });
+//routeInfo();
