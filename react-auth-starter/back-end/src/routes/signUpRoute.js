@@ -2,8 +2,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { getDbConnection } from "../db";
 import { v4 as uuid } from "uuid";
-import { sendEmail } from "../utils/sendEmail";
-import { log } from "../utils/logging";
+import { sendEmail } from "../services/sendEmail";
+import { log } from "../services/logging";
 
 export const signUpRoute = {
   path: "/api/signup",
@@ -46,40 +46,17 @@ export const signUpRoute = {
     // get the id of the newly created user
     const { insertedId } = result;
 
-    try {
-      // send the verification email with the verification string as a link
-      log("Sending verification email...");
-      sendEmail({
-        to: email,
-        from: process.env.SENDERMAIL,
-        subject: "Please verify your email",
-        text: `Please click on the following link to verify your email: http://localhost:3000/email-verification/${verificationString}`,
-      });
-      log("Verification email sent!");
-    } catch (err) {
-      log(err);
-      res.status(500).send(err);
-    }
+    // send the verification email with the verification string as a link
+    log("Sending verification email...");
+    sendEmail({
+      to: email,
+      from: process.env.SENDERMAIL,
+      subject: "Please verify your email",
+      text: `Please click on the following link to verify your email: http://localhost:3000/email-verification/${verificationString}`,
+    });
+    log("Verification email sent!");
 
     // sign a new token with the user's id and email
-    jwt.sign(
-      {
-        id: insertedId,
-        email,
-        info: startingInfo,
-        isVerified: false,
-      },
-      process.env.JWT_SECRET,
-      { expiresIn: "2d" },
-      (err, token) => {
-        if (err) {
-          log("Error signing token");
-          return res.sendStatus(500);
-        }
-
-        log("JTW token signed!");
-        res.status(200).send({ token });
-      }
-    );
+    createToken(insertedId, email, false, startingInfo);
   },
 };
