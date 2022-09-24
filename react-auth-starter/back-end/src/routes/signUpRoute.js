@@ -22,8 +22,7 @@ export const signUpRoute = {
 
     // use bycrypt to hash the password
     // saltrounds is the number of times the password is hashed
-    const saltRounds = 10;
-    const salt = await bcrypt.genSalt(saltRounds);
+    const salt = await bcrypt.genSalt(newPassword, process.env.SALT);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // create a verification string
