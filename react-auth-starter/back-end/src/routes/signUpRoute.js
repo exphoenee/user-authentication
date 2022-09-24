@@ -1,7 +1,10 @@
 import { getDbConnection } from "../db";
 import { v4 as uuid } from "uuid";
-import { sendEmail } from "../services/sendEmail";
+
+import sendEmail from "../services/sendEmail";
 import { log } from "../services/logging";
+import hashPassword from "../services/hashPassword";
+import createToken from "../services/createToken";
 
 export const signUpRoute = {
   path: "/api/signup",
