@@ -18,8 +18,6 @@ export const forgotPasswordRoute = {
       .collection(process.env.USERSCOLLECTION)
       .updateOne({ email }, { $set: { passwordResetCode } });
 
-    console.log(user);
-
     if (user.modifiedCount > 0) {
       try {
         sendEmail({
