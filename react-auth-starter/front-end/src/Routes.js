@@ -16,12 +16,13 @@ export const Routes = () => {
     <Router>
       <Switch>
         {routing.map((route, index) => {
+          const { path, exact } = route;
           return route.privateRoute ? (
-            <PrivateRoute key={index} {...route}>
+            <PrivateRoute key={index} {...{ path, exact }}>
               {route.component}
             </PrivateRoute>
           ) : (
-            <Route key={index} {...route}>
+            <Route key={index} {...{ path, exact }}>
               {route.component}
             </Route>
           );
