@@ -15,13 +15,17 @@ const LoginPage = () => {
   const history = useHistory();
 
   const onLoginClicked = async () => {
-    const response = await axios.post("http://localhost:8080/api/login", {
-      email,
-      password,
-    });
-    const { token } = response.data;
-    setToken(token);
-    history.push(getRoute("home"));
+    try {
+      const response = await axios.post("http://localhost:8080/api/login", {
+        email,
+        password,
+      });
+      const { token } = response.data;
+      setToken(token);
+      history.push(getRoute("home"));
+    } catch (err) {
+      setErrorMessages(err.message);
+    }
   };
 
   const onSignUpClicked = () => {
