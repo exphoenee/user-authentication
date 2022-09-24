@@ -1,5 +1,3 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import { getDbConnection } from "../db";
 import { v4 as uuid } from "uuid";
 import { sendEmail } from "../services/sendEmail";
