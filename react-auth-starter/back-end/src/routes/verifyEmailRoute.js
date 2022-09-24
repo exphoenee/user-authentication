@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 import { getDbConnection } from "../db";
 import jwt from "jsonwebtoken";
-import { log } from "../utils/logging";
+import { log } from "../services/logging";
 
 export const verifyEmailRoute = {
   path: "/api/verifyemail",
@@ -34,19 +34,6 @@ export const verifyEmailRoute = {
       .updateOne({ _id: ObjectId(id) }, { $set: { isVerified: true } });
 
     //signing a new token with the updated user data
-    jwt.sign(
-      { id, email, isVerified: true, info },
-      process.env.JWT_SECRET,
-      { expiresIn: "2d" },
-      (err, token) => {
-        if (err) {
-          log("Error signing token");
-          return res.sendStatus(500);
-        }
-
-        log("JTW token signed!");
-        res.status(200).send({ token });
-      }
-    );
+    createToken(id, email, true, info);
   },
 };
