@@ -1,4 +1,4 @@
-import { log } from "../utils/logging";
+import { log } from "../services/logging";
 
 export const testRoute = {
   path: "/api/test",
