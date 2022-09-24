@@ -1,7 +1,9 @@
 import jwt, { verify } from "jsonwebtoken";
 import { ObjectId } from "mongodb";
 import { getDbConnection } from "../db";
-import { log } from "../utils/logging";
+import { log } from "../services/logging";
+
+import { createToken } from "../services/createToken";
 
 export const updateUserInfoRoute = {
   path: "/api/users/:userId",
@@ -69,19 +71,7 @@ export const updateUserInfoRoute = {
       const { email, info } = result.value;
 
       //signing a new token with the updated user data
-      jwt.sign(
-        { id, email, isVerified, info },
-        process.env.JWT_SECRET,
-        { expiresIn: "2d" },
-        (err, token) => {
-          if (err) {
-            log("JWT token sign failed.");
-            return res.status(200).json(err);
-          }
-          log("JWT token signed.");
-          res.status(200).json({ token });
-        }
-      );
+      createToken(id, email, isVerified, info);
     });
   },
 };
