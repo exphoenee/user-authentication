@@ -57,7 +57,7 @@ const SignUpPage = () => {
       />
       <hr />
       <button
-        disable={
+        disabled={
           !email ||
           !password ||
           !passwordConfirm ||
@@ -68,15 +68,7 @@ const SignUpPage = () => {
       >
         Register
       </button>
-      <button
-        disable={
-          !email ||
-          !password ||
-          !passwordConfirm ||
-          password !== passwordConfirm
-        }
-        onClick={onLoginClicked}
-      >
+      <button onClick={onLoginClicked}>
         You have an account already? Login
       </button>
     </div>
