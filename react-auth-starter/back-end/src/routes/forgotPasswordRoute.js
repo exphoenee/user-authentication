@@ -1,8 +1,8 @@
 import { v4 as uuid } from "uuid";
 
-import { sendEmail } from "../utils/sendEmail";
+import { sendEmail } from "../services/sendEmail";
 import { getDbConnection } from "../db";
-import { log } from "../utils/logging";
+import { log } from "../services/logging";
 
 export const forgotPasswordRoute = {
   path: "/api/forgot-password/:email",
@@ -19,17 +19,12 @@ export const forgotPasswordRoute = {
       .updateOne({ email }, { $set: { passwordResetCode } });
 
     if (user.modifiedCount > 0) {
-      try {
-        sendEmail({
-          to: email,
-          from: process.env.SENDERMAIL,
-          subject: "Password Reset",
-          text: `To reset your password click this link: http://localhost:3000/reset-password/${passwordResetCode}`,
-        });
-      } catch (error) {
-        log(error);
-        res.status(500).send("error");
-      }
+      sendEmail({
+        to: email,
+        from: process.env.SENDERMAIL,
+        subject: "Password Reset",
+        text: `To reset your password click this link: http://localhost:3000/reset-password/${passwordResetCode}`,
+      });
     }
   },
 };
