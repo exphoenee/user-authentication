@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import hashPassword from "../services/hashPassword";
 import { getDbConnection } from "../db";
 
 export const resetPasswordRoute = {
@@ -10,14 +10,13 @@ export const resetPasswordRoute = {
 
     const db = getDbConnection(process.env.DBNAME);
 
-    const salt = await bcrypt.genSalt(newPassword, process.env.SALT);
-    const newHashedPassword = await bcrypt.hash(salt);
+    const newHashedPassword = await hashPassword(newPassword);
 
     const user = await db
       .collection(process.env.USERSCOLLECTION)
       .findOneAndUpdate(
         { passwordResetCode },
-        { $set: { newHashedPassword } },
+        { $set: { hashedPassword: newHashedPassword } },
         { $unset: { passwordResetCode: "" } }
       );
 
