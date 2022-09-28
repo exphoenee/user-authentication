@@ -1,6 +1,6 @@
-import oAuthClient from "./oAuthClient";
+import { oAuthClient } from "./oAuthClient";
 
-const getGoogleOAuthUrl = () => {
+export const getGoogleOAuthUrl = () => {
   const scopes = [
     "https://www.googleapis.com/auth/userinfo.email",
     "https://www.googleapis.com/auth/userinfo.profile",
@@ -14,5 +14,3 @@ const getGoogleOAuthUrl = () => {
 
   return url;
 };
-
-export default getGoogleOAuthUrl;
