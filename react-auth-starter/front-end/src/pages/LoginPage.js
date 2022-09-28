@@ -3,18 +3,26 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 import { getRoute } from "../Routes";
-
 import { useToken } from "./../auth/useToken";
+import { useQueryParams } from "./../util/useQueryParams";
 
 const LoginPage = () => {
-  const [token, setToken] = useToken();
+  const [_, setToken] = useToken();
 
   const [errorMessages, setErrorMessages] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [googleOauthUrl, setGoogleOauthUrl] = useState("");
+  const { token: googleOauthToken } = useQueryParams();
 
   const history = useHistory();
+
+  useEffect(() => {
+    if (googleOauthToken) {
+      setToken(googleOauthToken);
+      history.push(getRoute("home"));
+    }
+  }, [googleOauthToken, setToken, history]);
 
   useEffect(() => {
     const loadOathUrl = async () => {
