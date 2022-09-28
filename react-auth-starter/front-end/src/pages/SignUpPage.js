@@ -27,7 +27,9 @@ const SignUpPage = () => {
       });
       const { token } = response.data;
       setToken(token);
-      history.push(getRoute("home"));
+      history.push(
+        getRoute(`/verify-email?email=${encodeURIComponent(email)}`)
+      );
     } catch (err) {
       setErrorMessages(err.message);
     }
