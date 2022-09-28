@@ -10,6 +10,7 @@ import EmailVerificationPage from "./pages/EmailVerificationPage";
 import LogoutPage from "./pages/LogoutPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import PasswordResetLandingPage from "./pages/PasswordResetLandingPage";
+import EmailVerificationCodePage from "./pages/EmailVerificationCodePage";
 
 export const Routes = () => {
   return (
@@ -30,11 +31,6 @@ export const Routes = () => {
       </Switch>
     </Router>
   );
-};
-
-export const getRoute = (routeName) => {
-  const route = routing.find((route) => route.name === routeName);
-  return route.path;
 };
 
 export const routing = [
@@ -72,4 +68,22 @@ export const routing = [
     path: "/reset-password/:passwordResetCode",
     component: <PasswordResetLandingPage />,
   },
+  {
+    name: "emailverificationcode",
+    path: "/verify-email",
+    component: <EmailVerificationCodePage />,
+    exact: true,
+  },
 ];
+
+export const getRoute = (routeName, params = null) => {
+  const route = routing.find((route) => route.name === routeName);
+  const urlParams =
+    typeof params === "object" && params !== null
+      ? "?" +
+        Object.entries(params)
+          .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
+          .join("&")
+      : "";
+  return route.path + urlParams;
+};
