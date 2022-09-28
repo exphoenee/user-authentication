@@ -1,5 +1,7 @@
 import { getDbConnection } from "../db";
 import { v4 as uuid } from "uuid";
+import { CognitoUserAttribute } from "amazon-cognito-identity-js";
+import { awsUserPool } from "../util/awsUserPool";
 
 import sendEmail from "../services/sendEmail";
 import { log } from "../services/logging";
@@ -11,53 +13,38 @@ export const signUpRoute = {
   method: "post",
   handler: async (req, res) => {
     const { email, password } = req.body;
-    const db = getDbConnection(process.env.DBNAME);
-    const user = await db
-      .collection(process.env.USERSCOLLECTION)
-      .findOne({ email });
+    const attributes = [
+      new CognitoUserAttribute({
+        Name: "email",
+        Value: email,
+      }),
+    ];
 
-    if (user) {
-      log("User already exists in DB!");
-      res.status(409).send("User already exists in DB!");
-    }
+    awsUserPool.signUp(email, password, attributes, null, async (err, res) => {
+      if (err) {
+        res.status(400).json({ error: err.message });
+        log(err);
+        return;
+      }
+      const db = getDbConnection("react-auth-db");
 
-    // use bycrypt to hash the password
-    // saltrounds is the number of times the password is hashed
-    const hashedPassword = await hashPassword(password);
+      const startingInfo = {
+        hairColor: "",
+        favoriteFood: "",
+        bio: "",
+      };
 
-    // create a verification string
-    const verificationString = uuid();
+      const result = await db.collection("users").insertOne({
+        email,
+        info: startingInfo,
+      });
 
-    // create a new user object
-    const startingInfo = {
-      hairColor: "",
-      favoriteFood: "",
-      bio: "",
-    };
+      const { instertedId } = result;
 
-    // insert the user into the database
-    const result = await db.collection(process.env.USERSCOLLECTION).insertOne({
-      email,
-      hashedPassword,
-      info: startingInfo,
-      verificationString,
-      isVerified: false,
+      const token = createToken(instertedId, false, email, startingInfo);
+
+      const cognitoUser = result.user;
+      res.status(200).json({ message: "User created successfully" });
     });
-
-    // get the id of the newly created user
-    const { insertedId } = result;
-
-    // send the verification email with the verification string as a link
-    log("Sending verification email...");
-    sendEmail({
-      to: email,
-      from: process.env.SENDERMAIL,
-      subject: "Please verify your email",
-      text: `Please click on the following link to verify your email: http://localhost:3000/email-verification/${verificationString}`,
-    });
-    log("Verification email sent!");
-
-    // sign a new token with the user's id and email
-    createToken(insertedId, email, false, startingInfo);
   },
 };
