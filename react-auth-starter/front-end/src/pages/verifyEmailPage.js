@@ -1,24 +1,25 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { getRoute } from "./../Routes";
+import { useQueryParams } from "./../util/useQueryParams";
 
 const VerifyEmailPage = () => {
-  const [message, setMessage] = useState("");
+  const history = useHistory();
+
+  const { email } = useQueryParams();
 
   useEffect(() => {
     const interval = setTimeout(() => {
-      const token = window.location.search.split("=")[1];
-      if (token) {
-        setMessage(
-          "Thank you for signing up! A verification email has been sent!"
-        );
-      }
+      history.push(getRoute("verify-email"), {
+        email: encodeURIComponent(email),
+      });
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [history, email]);
 
   return (
     <div>
-      <h1>{message}</h1>
+      <h1>Thank you for signing up! A verification email has been sent!</h1>
     </div>
   );
 };
