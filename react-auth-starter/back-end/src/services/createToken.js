@@ -1,6 +1,6 @@
 import jwt, { verify } from "jsonwebtoken";
 
-const createToken = (id, email, isVerified, info) => {
+const createToken = (id, email, isVerified, info, cb) => {
   jwt.sign(
     { id, email, isVerified, info },
     process.env.JWT_SECRET,
@@ -12,6 +12,7 @@ const createToken = (id, email, isVerified, info) => {
       }
       log("JWT token signed.");
       res.status(200).json({ token });
+      cb(err, token);
     }
   );
 };
