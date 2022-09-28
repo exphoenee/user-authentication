@@ -7,6 +7,8 @@ import { logoutRoute } from "./logoutRoute";
 import { forgotPasswordRoute } from "./forgotPasswordRoute";
 import { resetPasswordRoute } from "./resetPasswordRoute";
 import { getGoogleOAuthUrlRouth } from "./getGoogleOAuthUrlRoute";
+import { googleOAuthCallbackRoute } from "./googleOAuthCallbackRoute";
+
 //import { testEmailRoute } from "./testEmailRoute";
 
 export const routes = [
@@ -19,6 +21,7 @@ export const routes = [
   forgotPasswordRoute,
   resetPasswordRoute,
   getGoogleOAuthUrlRouth,
+  googleOAuthCallbackRoute,
   //testEmailRoute,
 ];
 
@@ -28,4 +31,5 @@ export const routeInfo = () =>
     console.log(JSON.stringify(routeMap));
     return routeMap;
   });
-//routeInfo();
+
+routeInfo();
