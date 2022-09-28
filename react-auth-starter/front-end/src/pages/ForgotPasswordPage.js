@@ -18,7 +18,7 @@ const ForgotPasswordPage = () => {
       console.log("put method successed");
       setTimeout(() => {
         console.log("redirected to login");
-        history.push(getRoute("login"));
+        history.push(getRoute("reset-password", { email }));
       }, 3000);
     } catch (err) {
       console.log(err);
