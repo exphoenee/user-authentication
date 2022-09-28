@@ -65,7 +65,7 @@ export const routing = [
   },
   {
     name: "resetpassword",
-    path: "/reset-password/:passwordResetCode",
+    path: "/reset-password",
     component: <PasswordResetLandingPage />,
   },
   {
