@@ -1,28 +1,24 @@
-import hashPassword from "../services/hashPassword";
-import { getDbConnection } from "../db";
+import { CognitoUser } from "amazon-cognito-identity-js";
+import { awsUserPool } from "./../util/awsUserPool";
 
 export const resetPasswordRoute = {
   path: "/api/users/:passwordResetCode/reset-password",
   method: "put",
   handler: async (req, res) => {
     const { passwordResetCode } = req.params;
-    const { newPassword } = req.body;
+    const { email, newPassword } = req.body;
 
-    const db = getDbConnection(process.env.DBNAME);
-
-    const newHashedPassword = await hashPassword(newPassword);
-
-    const user = await db
-      .collection(process.env.USERSCOLLECTION)
-      .findOneAndUpdate(
-        { passwordResetCode },
-        { $set: { hashedPassword: newHashedPassword } },
-        { $unset: { passwordResetCode: "" } }
-      );
-
-    if (user.lastErrorObject.n === 0) {
-      res.status(404).send("Password reset failed");
-    }
-    res.status(200).send("Password reset successful");
+    new CognitoUser({
+      Username: email,
+      Pool: awsUserPool,
+    }).confirmPassword(passwordResetCode, newPassword, {
+      onSuccess: (result) => {
+        res.status(200).send(result);
+      },
+      onFailure: (err) => {
+        log(err.message);
+        res.status(401).send(err.message);
+      },
+    });
   },
 };
