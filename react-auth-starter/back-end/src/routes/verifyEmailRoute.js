@@ -1,6 +1,5 @@
 import { ObjectId } from "mongodb";
 import { getDbConnection } from "../db";
-import jwt from "jsonwebtoken";
 import { log } from "../services/logging";
 
 export const verifyEmailRoute = {
